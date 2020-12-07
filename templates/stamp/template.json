@@ -66,18 +66,6 @@
                 "description": "SSH Key for the Virtual Machine."
             }
         },
-        "UbuntuOsImageSku": {
-            "type": "string",
-            "defaultValue": "16.04.0-LTS",
-            "allowedValues": [
-                "16.04.0-LTS",
-                "14.04.5-LTS",
-                "12.04.5-LTS"
-            ],
-            "metadata": {
-                "description": "The default Azure Ubuntu Image version to use for VMs"
-            }
-        },
         "diskSize": {
             "type": "int",
             "defaultValue":50,
@@ -416,7 +404,9 @@
                         "vhd": {
                             "uri": "[concat(variables('storageContainerUri'), variables('virtualMachineName'), variables('diskNameSalt'), '.vhd')]"
                         },
-                        "name": "[variables('virtualMachineName')]"
+                        "name": "[variables('virtualMachineName')]",
+                        "caching": "ReadWrite",
+                        "diskSizeGB": "[parameters('diskSize')]"
                     },
                     "imageReference": {
                         "publisher": "Canonical",
