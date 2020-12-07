@@ -11,9 +11,6 @@
         "virtualMachineSize": {
             "value": "Standard_D3_v2"
         },
-        "UbuntuOsImageSku": {
-            "value": "16.04.0-LTS"
-        },
         "diskSize": {
             "value": 50
         },
