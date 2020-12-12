@@ -300,7 +300,151 @@
         "virtualNetworkId": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetReference": "[concat(variables('virtualNetworkId'), '/subnets/', variables('subnetName'))]",
 
-        "storageContainerUri": "[concat(concat('https://', variables('diskStorageAccountName'), '.blob.core.windows.net/'), 'vhds/')]"
+        "storageContainerUri": "[concat(concat('https://', variables('diskStorageAccountName'), '.blob.core.windows.net/'), 'vhds/')]",
+        
+        "loadBalancerName": "[concat(variables('clusterName'), '-lb')]",
+        "backEndPoolName": "[concat(variables('clusterName'), '-bepool')]",
+        "cmsPublicIpAddressName": "[concat(variables('clusterName'), '-cms-ip')]",
+        "lmsPublicIpAddressName": "[concat(variables('clusterName'), '-lms-ip')]",
+        "cmsFrontendIpConfigName": "CMS",
+        "lmsFrontendIpConfigName": "LMS",
+        "tcpProbeCMSName": "tcpProbeCMS",
+        "tcpProbeCMSSSLName": "tcpProbeCMSSSL",
+        "tcpProbeLMSName": "tcpProbeLMS",
+        "tcpProbeLMSSSLName": "tcpProbeLMSSSL",
+        "lbRulesCMSName": "LBRuleCMS",
+        "lbRulesCMSSSLName": "LBRuleCMS_SSL",
+        "lbRulesLMSName": "LBRuleLMS",
+        "lbRulesLMSSSLName": "LBRuleLMS_SSL",
+        "loadBalancingRules":[
+            {
+                "name": "[variables('lbRulesCMSName')]",
+                "properties": {
+                    "frontendIPConfiguration": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIPConfigurations/', variables('cmsFrontendIpConfigName'))]"
+                    },
+                    "frontendPort": 80,
+                    "backendPort": 18010,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 5,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false,
+                    "loadDistribution": "SourceIP",
+                    "backendAddressPool": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('loadBalancerName'), variables('backendpoolName'))]"
+                    },
+                    "probe": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/', variables('tcpProbeCMSName'))]"
+                    }
+                }
+            },
+            {
+                "name": "[variables('lbRulesCMSSSLName')]",
+                "properties": {
+                    "frontendIPConfiguration": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIPConfigurations/', variables('cmsFrontendIpConfigName'))]"
+                    },
+                    "frontendPort": 443,
+                    "backendPort": 48010,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 5,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false,
+                    "loadDistribution": "SourceIP",
+                    "backendAddressPool": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('loadBalancerName'), variables('backendpoolName'))]"
+                    },
+                    "probe": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/', variables('tcpProbeCMSSSLName'))]"
+                    }
+                }
+            },
+            {
+                "name": "[variables('lbRulesLMSName')]",
+                "properties": {
+                    "frontendIPConfiguration": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIPConfigurations/', variables('lmsFrontendIpConfigName'))]"
+                    },
+                    "frontendPort": 80,
+                    "backendPort": 80,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 5,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false,
+                    "loadDistribution": "SourceIP",
+                    "backendAddressPool": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('loadBalancerName'), variables('backendpoolName'))]"
+                    },
+                    "probe": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/', variables('tcpProbeLMSName'))]"
+                    }
+                }
+            },
+            {
+                "name": "[variables('lbRulesLMSSSLName')]",
+                "properties": {
+                    "frontendIPConfiguration": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIPConfigurations/', variables('lmsFrontendIpConfigName'))]"
+                    },
+                    "frontendPort": 443,
+                    "backendPort": 443,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 5,
+                    "protocol": "Tcp",
+                    "enableTcpReset": false,
+                    "loadDistribution": "SourceIP",
+                    "backendAddressPool": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('loadBalancerName'), variables('backendpoolName'))]"
+                    },
+                    "probe": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/', variables('tcpProbeLMSSSLName'))]"
+                    }
+                }
+            }
+        ],
+        "probes":[
+            {
+                "name": "[variables('tcpProbeCMSName')]",
+                "properties": {
+                    "protocol": "Http",
+                    "port": 18010,
+                    "requestPath": "/heartbeat",
+                    "intervalInSeconds": 5,
+                    "numberOfProbes": 6
+                }
+            },
+            {
+                "name": "[variables('tcpProbeCMSSSLName')]",
+                "properties": {
+                    "protocol": "Tcp",
+                    "port": 48010,
+                    "intervalInSeconds": 5,
+                    "numberOfProbes": 6
+                }
+            },
+            {
+                "name": "[variables('tcpProbeLMSName')]",
+                "properties": {
+                    "protocol": "Http",
+                    "port": 80,
+                    "requestPath": "/heartbeat",
+                    "intervalInSeconds": 5,
+                    "numberOfProbes": 6
+                }
+            },
+            {
+                "name": "[variables('tcpProbeLMSSSLName')]",
+                "properties": {
+                    "protocol": "Tcp",
+                    "port": 443,
+                    "intervalInSeconds": 5,
+                    "numberOfProbes": 6
+                }
+            }
+        ],
+
+        "cmsTrafficManagerName":"[concat(variables('clusterName'), '-cms-tm')]",
+        "lmsTrafficManagerName":"[concat(variables('clusterName'), '-lms-tm')]"
     },
     "resources":[
         {
@@ -311,7 +455,8 @@
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
                 "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]"
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
+                "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -325,13 +470,180 @@
                             "privateIPAddressVersion": "IPv4",
                             "publicIpAddress": {
                                 "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
-                            }
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/backendAddressPools/', variables('backEndPoolName'))]"
+                                }
+                            ]
                         }
                     }
                 ],
                 "networkSecurityGroup": {
                     "id": "[variables('networkSecurityGroupId')]"
                 }
+            }
+        },
+        {
+            "apiVersion": "2020-06-01",
+            "name": "[variables('loadBalancerName')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Basic"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('cmsPublicIpAddressName'))]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('lmsPublicIpAddressName'))]"
+            ],
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "[variables('lmsFrontendIpConfigName')]",
+                        "properties": {
+                            "publicIPAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIPAddresses', variables('lmsPublicIpAddressName'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "[variables('cmsFrontendIpConfigName')]",
+                        "properties": {
+                            "publicIPAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIPAddresses', variables('cmsPublicIpAddressName'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[variables('backEndPoolName')]"
+                    }
+                ],
+                "inboundNatRules": [],
+                "loadBalancingRules": "[variables('loadBalancingRules')]",
+                "probes": "[variables('probes')]"
+                
+            }
+        },
+        {
+            "apiVersion": "2019-02-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('cmsPublicIpAddressName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAddressVersion": "IPv4",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('cmsPublicIpAddressName')]",
+                    "fqdn": "[concat(variables('cmsPublicIpAddressName'), '.southeastasia.cloudapp.azure.com')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2019-02-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('lmsPublicIpAddressName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAddressVersion": "IPv4",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('lmsPublicIpAddressName')]",
+                    "fqdn": "[concat(variables('lmsPublicIpAddressName'), '.southeastasia.cloudapp.azure.com')]"
+                }
+            }
+        },
+        {
+            "name": "[variables('lmsTrafficManagerName')]",
+            "type": "Microsoft.Network/trafficManagerProfiles",
+            "apiVersion": "2018-04-01",
+            "tags": {
+            },
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('lmsPublicIpAddressName'))]"
+            ],
+            "properties": {
+                "profileStatus": "Enabled",
+                "trafficRoutingMethod": "Priority",
+                "dnsConfig": {
+                    "relativeName": "[variables('lmsTrafficManagerName')]",
+                    "ttl": 60
+                },
+                "monitorConfig": {
+                    "protocol": "HTTP",
+                    "port": 80,
+                    "path": "/",
+                    "intervalInSeconds": 30,
+                    "timeoutInSeconds": 10,
+                    "toleratedNumberOfFailures": 3
+                },
+                "endpoints": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/trafficManagerProfiles', variables('lmsTrafficManagerName')), '/externalEndpoints/endpoint')]",
+                        "name": "endpoint",
+                        "type": "Microsoft.Network/trafficManagerProfiles/externalEndpoints",
+                        "properties": {
+                            "endpointStatus": "Enabled",
+                            "target": "[concat(variables('lmsPublicIpAddressName'), '.southeastasia.cloudapp.azure.com')]",
+                            "weight": 1,
+                            "priority": 1
+                        }
+                    }
+                ],
+                "trafficViewEnrollmentStatus": "Disabled",
+                "maxReturn": 0
+            }
+        },
+        {
+            "name": "[variables('cmsTrafficManagerName')]",
+            "type": "Microsoft.Network/trafficManagerProfiles",
+            "apiVersion": "2018-04-01",
+            "tags": {
+            },
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('cmsPublicIpAddressName'))]"
+            ],
+            "properties": {
+                "profileStatus": "Enabled",
+                "trafficRoutingMethod": "Priority",
+                "dnsConfig": {
+                    "relativeName": "[variables('cmsTrafficManagerName')]",
+                    "ttl": 60
+                },
+                "monitorConfig": {
+                    "protocol": "HTTP",
+                    "port": 80,
+                    "path": "/",
+                    "intervalInSeconds": 30,
+                    "timeoutInSeconds": 10,
+                    "toleratedNumberOfFailures": 3
+                },
+                "endpoints": [
+                    {
+                        "id": "[concat(resourceId('Microsoft.Network/trafficManagerProfiles', variables('cmsTrafficManagerName')), '/externalEndpoints/endpoint')]",
+                        "name": "endpoint",
+                        "type": "Microsoft.Network/trafficManagerProfiles/externalEndpoints",
+                        "properties": {
+                            "endpointStatus": "Enabled",
+                            "target": "[concat(variables('cmsPublicIpAddressName'), '.southeastasia.cloudapp.azure.com')]",
+                            "weight": 1,
+                            "priority": 1
+                        }
+                    }
+                ],
+                "trafficViewEnrollmentStatus": "Disabled",
+                "maxReturn": 0
             }
         },
         {
