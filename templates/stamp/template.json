@@ -72,6 +72,27 @@
             "metadata":{
                 "descrption":"Size of Virtual Machine Disk"
             }
+        },
+        "installerGithubBranchName": {
+            "type": "string",
+            "defaultValue": "master",
+            "metadata": {
+                "description": "Branch of the installer in github."
+            }
+        },
+        "installerGithubProjectName": {
+            "type": "string",
+            "defaultValue": "enialrahs",
+            "metadata": {
+                "description": "Project name of the installer in github."
+            }
+        },
+        "installerGithubAccountName": {
+            "type": "string",
+            "defaultValue": "onecliquezone",
+            "metadata": {
+                "description": "Project name of the installer in github."
+            }
         }
     },
     "variables": {
@@ -790,7 +811,7 @@
                         "value": []
                     },
                     "commandToExecute": {
-                        "value": "wget https://raw.githubusercontent.com/onecliquezone/enialrash/master/utils/install/install-openedx.sh  -O - | sudo -H bash"
+                        "value": "[concat('wget https://raw.githubusercontent.com/', parameters('installerGithubAccountName'), '/', parameters('installerGithubProjectName'), '/', parameters('installerGithubBranchName'), '/utils/install/install-openedx.sh  -O - | sudo -H bash')]"
                     }
                 }
             },

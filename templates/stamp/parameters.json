@@ -19,6 +19,15 @@
         },
         "adminPublicKey": {
             "value": "ssh-rsa *** user@desktop"
+        },
+        "installerGithubAccountName": {
+            "value": "onecliquezone"
+        },
+        "installerGithubBranchName": {
+            "value": "master"
+        },
+        "installerGithubProjectName": {
+            "value": "enialrahs"
         }
     }
 }
