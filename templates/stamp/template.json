@@ -72,6 +72,62 @@
             "metadata":{
                 "descrption":"Size of Virtual Machine Disk"
             }
+        },
+        "cmsBaseURL": {
+            "type": "string",
+            "defaultValue": "studio.enialrahs.org",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "lmsBaseURL": {
+            "type": "string",
+            "defaultValue": "enialrahs.org",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "installerGithubAccountName": {
+            "type": "string",
+            "defaultValue": "onecliquezone",
+            "metadata": {
+                "description": "Open EdX installer Github account name"
+            }
+        },
+        "installerGithubProjectName": {
+            "type": "string",
+            "defaultValue": "enialrahs",
+            "metadata": {
+                "description": "Open EdX installer Github project name"
+            }
+        },
+        "installerGithubBranch": {
+            "type": "string",
+            "defaultValue": "master",
+            "metadata": {
+                "description": "Open EdX installer Github branch"
+            }
+        },
+        "edxConfigurationGithubAccountName": {
+            "type": "string",
+            "defaultValue": "onecliquezone",
+            "metadata": {
+                "description": "Open EdX configuration Github account name."
+            }
+        },
+        "edxConfigurationGithubProjectName": {
+            "type": "string",
+            "defaultValue": "configuration",
+            "metadata": {
+                "description": "Open EdX configuration Github project name."
+            }
+        },
+        "edxConfigurationGithubBranch": {
+            "type": "string",
+            "defaultValue": "open-release/ironwood.master",
+            "metadata": {
+                "description": "Open EdX configuration Github branch."
+            }
         }
     },
     "variables": {
@@ -790,7 +846,7 @@
                         "value": []
                     },
                     "commandToExecute": {
-                        "value": "wget https://raw.githubusercontent.com/onecliquezone/enialrash/master/utils/install/install-openedx.sh  -O - | sudo -H bash"
+                        "value": "[concat('wget https://raw.githubusercontent.com/', parameters('installerGithubAccountName'), '/', parameters('installerGithubProjectName'), '/', parameters('installerGithubBranch'), '/utils/install/install-openedx.sh && sudo -H bash install-openedx.sh --edxconfiguration-public-github-accountname ', parameters('edxConfigurationGithubAccountName'), ' --edxconfiguration-public-github-projectname ', parameters('edxConfigurationGithubProjectName'), ' --edxconfiguration-public-github-projectbranch ', parameters('edxConfigurationGithubBranch'), ' --edxplatform-lms-base ', parameters('lmsBaseURL'), ' --edxplatform-cms-base ', parameters('cmsBaseURL'), '')]"
                     }
                 }
             },
