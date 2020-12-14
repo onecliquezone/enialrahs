@@ -95,6 +95,8 @@ rabbitmq-plugins enable rabbitmq_management
 
 apt-get install python3-pip -y
 
+export OPENEDX_RELEASE=$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH
+
 wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/util/install/ansible-bootstrap.sh -O - | sudo -H bash
 
 mkdir /home/rabbitmq/
