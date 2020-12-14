@@ -49,7 +49,7 @@ if($isLoggedIn){
    
 
     $armParameters = @{
-        'clusterName'=(&{If($clusterName) {$name} Else {$parmeters.parameters.clusterName.value}})
+        'clusterName'=(&{If($clusterName) {$clusterName} Else {$parmeters.parameters.clusterName.value}})
         'location'=(&{If($Location) {$Location} Else {$parmeters.parameters.location.value}})
 
         'virtualMachineSize'=(&{If($virtualMachineSize) {$virtualMachineSize} Else {$parmeters.parameters.virtualMachineSize.value}})
@@ -71,10 +71,10 @@ if($isLoggedIn){
     }
 
     New-AzResourceGroupDeployment `
-        -Name "Open EdX Template" `
+        -Name "OpenEdXTemplate" `
         -ResourceGroupName $ResourceGroupName `
         -TemplateFile $FullDeploymentArmTemplateFile `
-        -TemplateParameterObject $parmeters
+        -TemplateParameterObject $armParameters
 }
 else {
     Write-Error "Invalid Access."
