@@ -30,14 +30,14 @@ param(
 )
 
 
-#$azSecureApplicationKey = $AadWebClientAppKey | ConvertTo-SecureString -AsPlainText -Force
-#$azCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $AadWebClientId, $azSecureApplicationKey
-#$isLoggedIn = [bool](Connect-AzAccount -Credential $azCredential -TenantId $AadTenantId -ServicePrincipal)
-$isLoggedIn = $true
+$azSecureApplicationKey = $AadWebClientAppKey | ConvertTo-SecureString -AsPlainText -Force
+$azCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $AadWebClientId, $azSecureApplicationKey
+$isLoggedIn = [bool](Connect-AzAccount -Credential $azCredential -TenantId $AadTenantId -ServicePrincipal)
+
 if($isLoggedIn){
-    #Select-AzSubscription -Subscription $AzureSubscriptionName
+    Select-AzSubscription -Subscription $AzureSubscriptionName
     Write-Host "Deploying Resource Group."
-    #New-AzResourceGroup -Name $ResourceGroupName -Location $Location
+    New-AzResourceGroup -Name $ResourceGroupName -Location $Location
     Write-Host "Deploying Template."
 
     $invocation = (Get-Variable MyInvocation).Value 
@@ -49,7 +49,7 @@ if($isLoggedIn){
    
 
     $armParameters = @{
-        'clusterName'=(&{If($clusterName) {$name} Else {$parmeters.parameters.clusterName.value}})
+        'clusterName'=(&{If($clusterName) {$clusterName} Else {$parmeters.parameters.clusterName.value}})
         'location'=(&{If($Location) {$Location} Else {$parmeters.parameters.location.value}})
 
         'virtualMachineSize'=(&{If($virtualMachineSize) {$virtualMachineSize} Else {$parmeters.parameters.virtualMachineSize.value}})
@@ -69,12 +69,12 @@ if($isLoggedIn){
         'edxConfigurationGithubProjectName'=(&{If($edxConfigurationGithubProjectName) {$edxConfigurationGithubProjectName} Else {$parmeters.parameters.edxConfigurationGithubProjectName.value}})
         'edxConfigurationGithubBranch'=(&{If($edxConfigurationGithubBranch) {$edxConfigurationGithubBranch} Else {$parmeters.parameters.edxConfigurationGithubBranch.value}})
     }
-    $armParameters | ConvertTo-Json
-    #New-AzResourceGroupDeployment `
-    #    -Name "Open EdX Template" `
-    #    -ResourceGroupName $ResourceGroupName `
-    #    -TemplateFile $FullDeploymentArmTemplateFile `
-    #    -TemplateParameterFile $FullDeploymentParametersFile -
+
+    New-AzResourceGroupDeployment `
+        -Name "OpenEdXTemplate" `
+        -ResourceGroupName $ResourceGroupName `
+        -TemplateFile $FullDeploymentArmTemplateFile `
+        -TemplateParameterObject $armParameters
 }
 else {
     Write-Error "Invalid Access."
