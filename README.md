@@ -63,7 +63,33 @@ This project contains an **ARM Template** and some scripts used to deploy **Open
 |`-edxConfigurationGithubProjectName`   |string |false      |configuration                  |
 |`-edxConfigurationGithubBranch`        |string |false      |open-release/ironwood.master   |
 
+## Deploy via Azure ARM Template
+1. Clone `arm/template` branch.
+2. Edit environments in `/utils/install/install-openedx.sh`.
+
+        export OPENEDX_RELEASE=open-release/ironwood.master
+        export EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME=edx
+        export EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME=configuration
+        export EDXAPP_LMS_BASE=enialrash.org
+        export EDXAPP_CMS_BASE=studio.enialrash.org
+|Environment Name                           |Default Value                  |
+|-------------------------------------------|-------------------------------|
+|OPENEDX_RELEASE                            |open-release/ironwood.master   |
+|EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME|edx                            |
+|EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME|configuration                  |
+|EDXAPP_LMS_BASE                            |enialrash.org                  |
+|EDXAPP_CMS_BASE                            |studio.enialrash.org           |
+
+1. [Deploy ARM Template][deployarmtemplate]
+2. Click Build your own template in the editor
+3. Upload `template.json` file and save.
+4. Upload `parameters.json` file and save.
+5. Fill/Change the value of parameters.
+
+
 **Check out Azure Virtual Machines Sizes [here][vmsizes].**
+
+**Check out Open EdX Releases [here][edxreleases].**
 
 Deployment of azure resources takes a minute to complete. <br/>
 Open EdX installation takes almost 2 hours to finished. <br/>
@@ -79,8 +105,9 @@ To check the status of installation
     >**LMS**: `http://<clustername>-lms-tm.trafficmanager.net`
 
 
-
 [//]: # (These are reference links)
 
 
    [vmsizes]: <https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general?toc=/azure/virtual-machines/linux/toc.json&bc=/azure/virtual-machines/linux/breadcrumb/toc.json>
+   [deployarmtemplate]: <https://portal.azure.com/#create/Microsoft.Template>
+   [edxreleases]: <https://edx.readthedocs.io/projects/edx-developer-docs/en/latest/named_releases.html>
