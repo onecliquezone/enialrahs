@@ -833,7 +833,7 @@
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
-                    "uri": "https://gallery.azure.com/artifact/20161101/microsoft.custom-script-linux-arm.2.0.56/Artifacts/MainTemplate.json"
+                    "uri": "https://catalogartifact.azureedge.net/publicartifactsmigration/microsoft.custom-script-linux-arm.2.0.56/Artifacts/MainTemplate.json"
                 },
                 "parameters": {
                     "vmName": {
