@@ -1,0 +1,29 @@
+# Configure Platform Name
+
+EDXAPP_PLATFORM_NAME: "Enialrahs"
+
+# Configure DNS for site and email links
+# Must be the same with LMS and CMS URL from  
+EDXAPP_LMS_BASE: 'enialrahs.org'
+EDXAPP_CMS_BASE: 'studio.enialrahs.org'
+EDXAPP_SITE_NAME: '{{ EDXAPP_LMS_BASE }}'
+EDXAPP_LMS_SITE_NAME: '{{ EDXAPP_LMS_BASE }}'
+EDXAPP_CMS_SITE_NAME: '{{ EDXAPP_CMS_BASE }}'
+
+# Emailer Information
+EDXAPP_EMAIL_HOST: 'localhost'
+EDXAPP_EMAIL_PORT: 25
+EDXAPP_EMAIL_HOST_USER: ''
+EDXAPP_EMAIL_HOST_PASSWORD: 'DiOJQKJk3lgsQ9xiCyyoDwW2SARbcVffFDn' 
+
+# FROM Eamils
+EDXAPP_TECH_SUPPORT_EMAIL: 'support@example.com'
+EDXAPP_CONTACT_EMAIL: 'support@example.com'
+EDXAPP_BUGS_EMAIL: 'support@example.com'
+EDXAPP_DEFAULT_FROM_EMAIL: 'support@example.com'
+EDXAPP_DEFAULT_FEEDBACK_EMAIL: 'support@example.com'
+EDXAPP_DEFAULT_SERVER_EMAIL: 'support@example.com'
+EDXAPP_BULK_EMAIL_DEFAULT_FROM_EMAIL: 'support@example.com'
+EDXAPP_UNIVERSITY_EMAIL: 'support@example.com'
+EDXAPP_PRESS_EMAIL: 'support@example.com'
+EDXAPP_PAYMENT_SUPPORT_EMAIL: "support@example.com"

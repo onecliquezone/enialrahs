@@ -73,20 +73,6 @@
                 "descrption":"Size of Virtual Machine Disk"
             }
         },
-        "cmsBaseURL": {
-            "type": "string",
-            "defaultValue": "studio.enialrahs.org",
-            "metadata": {
-                "description": "description"
-            }
-        },
-        "lmsBaseURL": {
-            "type": "string",
-            "defaultValue": "enialrahs.org",
-            "metadata": {
-                "description": "description"
-            }
-        },
         "installerGithubAccountName": {
             "type": "string",
             "defaultValue": "onecliquezone",
@@ -124,7 +110,7 @@
         },
         "edxConfigurationGithubBranch": {
             "type": "string",
-            "defaultValue": "open-release/ironwood.master",
+            "defaultValue": "open-release/koa.master",
             "metadata": {
                 "description": "Open EdX configuration Github branch."
             }
@@ -846,7 +832,7 @@
                         "value": []
                     },
                     "commandToExecute": {
-                        "value": "[concat('wget https://raw.githubusercontent.com/', parameters('installerGithubAccountName'), '/', parameters('installerGithubProjectName'), '/', parameters('installerGithubBranch'), '/utils/install/install-openedx.sh && sudo -H bash install-openedx.sh --edxconfiguration-public-github-accountname ', parameters('edxConfigurationGithubAccountName'), ' --edxconfiguration-public-github-projectname ', parameters('edxConfigurationGithubProjectName'), ' --edxconfiguration-public-github-projectbranch ', parameters('edxConfigurationGithubBranch'), ' --edxplatform-lms-base ', parameters('lmsBaseURL'), ' --edxplatform-cms-base ', parameters('cmsBaseURL'), '')]"
+                        "value": "[concat('wget https://raw.githubusercontent.com/', parameters('installerGithubAccountName'), '/', parameters('installerGithubProjectName'), '/', parameters('installerGithubBranch'), '/utils/install/install-openedx.sh && sudo -H bash install-openedx.sh --edxconfiguration-public-github-accountname ', parameters('edxConfigurationGithubAccountName'), ' --edxconfiguration-public-github-projectname ', parameters('edxConfigurationGithubProjectName'), ' --edxconfiguration-public-github-projectbranch ', parameters('edxConfigurationGithubBranch'), '')]"
                     }
                 }
             },
