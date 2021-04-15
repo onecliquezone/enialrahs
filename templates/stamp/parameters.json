@@ -20,12 +20,6 @@
         "adminPublicKey": {
             "value": "ssh-rsa *** user@desktop"
         },
-        "cmsBaseURL": {
-            "value": "studio.enialrahs.org"
-        },
-        "lmsBaseURL": {
-            "value": "enialrahs.org"
-        },
         "installerGithubAccountName": {
             "value": "onecliquezone"
         },
@@ -33,7 +27,7 @@
             "value": "enialrahs"
         },
         "installerGithubBranch": {
-            "value": "master"
+            "value": "open-release/koa.master"
         },
         "edxConfigurationGithubAccountName": {
             "value": "onecliquezone"
@@ -42,7 +36,7 @@
             "value": "configuration"
         },
         "edxConfigurationGithubBranch": {
-            "value": "open-release/ironwood.master"
+            "value": "open-release/koa.3"
         }
     }
 }
