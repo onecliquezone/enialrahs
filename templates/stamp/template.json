@@ -110,7 +110,7 @@
         },
         "edxConfigurationGithubBranch": {
             "type": "string",
-            "defaultValue": "open-release/ironwood.master",
+            "defaultValue": "open-release/koa.master",
             "metadata": {
                 "description": "Open EdX configuration Github branch."
             }

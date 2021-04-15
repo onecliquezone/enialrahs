@@ -59,7 +59,7 @@ This project contains an **ARM Template** and some scripts used to deploy **Open
 |`-installerGithubBranch`               |string |false      |enialrahs                      |
 |`-edxConfigurationGithubAccountName`   |string |false      |onecliquezone                  |
 |`-edxConfigurationGithubProjectName`   |string |false      |configuration                  |
-|`-edxConfigurationGithubBranch`        |string |false      |open-release/koa.3             |
+|`-edxConfigurationGithubBranch`        |string |false      |open-release/koa.master        |
 
 **Check out Azure Virtual Machines Sizes [here][vmsizes].**
 

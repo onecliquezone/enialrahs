@@ -36,7 +36,7 @@
             "value": "configuration"
         },
         "edxConfigurationGithubBranch": {
-            "value": "open-release/koa.3"
+            "value": "open-release/koa.master"
         }
     }
 }
