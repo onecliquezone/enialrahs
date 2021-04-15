@@ -16,29 +16,29 @@ This project contains an **ARM Template** and some scripts used to deploy **Open
 
 
 ## Deploy via PowerShell
-**Run Deploy-ARM.ps1 in PowerShell**
 
-    &"<Deply-ARM directory>\Deploy-ARM.ps1" `
-        -AzureSubscriptionName "<Azure Subscription Name>" `
-        -ResourceGroupName "<Resource Group>" `
-        -Location "<Location>" `
-        -AadWebClientId "<AAD Client ID>" `
-        -AadWebClientAppKey "<AAD Client Key>" `
-        -AadTenantId "<AAD Tenant ID>" `
-        -FullDeploymentArmTemplateFile "<ARM Template File Path>" `
-        -clusterName "<root name or resources>" `
-        -virtualMachineSize "<Virtual Machine Size>" `
-        -diskSize <Disk Size> `
-        -adminUsername "<VM Username>" `
-        -adminPublicKey "<VM Public Key>" `
-        -cmsBaseURL "<CMS base URL>" `
-        -lmsBaseURL "<LMS base URL>" `
-        -installerGithubAccountName "<Installer Github account name>" `
-        -installerGithubProjectName "<Installer Github project name>" `
-        -installerGithubBranch "<Installer Github branch>" `
-        -edxConfigurationGithubAccountName "<Configuration Github account name>" `
-        -edxConfigurationGithubProjectName "<Configuration Github project name>" `
-        -edxConfigurationGithubBranch "<Configuration Github branch>"
+1. **Update config.yml for your configuration**
+2. **Run Deploy-ARM.ps1 in PowerShell**
+
+        &"<Deply-ARM directory>\Deploy-ARM.ps1" `
+            -AzureSubscriptionName "<Azure Subscription Name>" `
+            -ResourceGroupName "<Resource Group>" `
+            -Location "<Location>" `
+            -AadWebClientId "<AAD Client ID>" `
+            -AadWebClientAppKey "<AAD Client Key>" `
+            -AadTenantId "<AAD Tenant ID>" `
+            -FullDeploymentArmTemplateFile "<ARM Template File Path>" `
+            -clusterName "<root name or resources>" `
+            -virtualMachineSize "<Virtual Machine Size>" `
+            -diskSize <Disk Size> `
+            -adminUsername "<VM Username>" `
+            -adminPublicKey "<VM Public Key>" `
+            -installerGithubAccountName "<Installer Github account name>" `
+            -installerGithubProjectName "<Installer Github project name>" `
+            -installerGithubBranch "<Installer Github branch>" `
+            -edxConfigurationGithubAccountName "<Configuration Github account name>" `
+            -edxConfigurationGithubProjectName "<Configuration Github project name>" `
+            -edxConfigurationGithubBranch "<Configuration Github branch>"
 **Deploy-ARM.ps1 Parameters**
 | Parameter name                        | Type  | Mandatory | Default Value                 |
 |---------------------------------------|-------|-----------|-------------------------------|
@@ -54,14 +54,12 @@ This project contains an **ARM Template** and some scripts used to deploy **Open
 |`-diskSize`                            |int    |false      |50                             |
 |`-adminUsername`                       |string |true       |enialrash                      |
 |`-adminPublicKey`                      |string |true       |                               |
-|`-cmsBaseURL`                          |string |false      |studio.enialrahs.org           |
-|`-lmsBaseURL`                          |string |false      |enialrahs.org                  |
 |`-installerGithubAccountName`          |string |false      |enialrahs                      |
-|`-installerGithubProjectName`          |string |false      |master                         |
+|`-installerGithubProjectName`          |string |false      |open-release/koa.master        |
 |`-installerGithubBranch`               |string |false      |enialrahs                      |
 |`-edxConfigurationGithubAccountName`   |string |false      |onecliquezone                  |
 |`-edxConfigurationGithubProjectName`   |string |false      |configuration                  |
-|`-edxConfigurationGithubBranch`        |string |false      |open-release/ironwood.master   |
+|`-edxConfigurationGithubBranch`        |string |false      |open-release/koa.3             |
 
 **Check out Azure Virtual Machines Sizes [here][vmsizes].**
 
