@@ -3,8 +3,6 @@
 EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME=""
 EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME=""
 EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH=""
-EDXAPP_LMS_BASE=""
-EDXAPP_CMS_BASE=""
 
 help()
 {
@@ -13,8 +11,6 @@ help()
     echo "        --edxconfiguration-public-github-accountname Name of the account that owns the edx configuration repository"
     echo "        --edxconfiguration-public-github-projectname Name of the edx configuration GitHub repository"
     echo "        --edxconfiguration-public-github-projectbranch Branch of edx configuration GitHub repository"
-    echo "        --edxplatform-lms-base Platform base URL for LMS"
-    echo "        --edxplatform-cms-base Platform base URL for CMS"
 }
 
 # Parse script parameters
@@ -44,12 +40,6 @@ parse_args()
                 ;;
             --edxconfiguration-public-github-projectbranch)
                 EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH="${arg_value}"
-                ;;
-            --edxplatform-lms-base)
-                EDXAPP_LMS_BASE="${arg_value}"
-                ;;
-            --edxplatform-cms-base)
-                EDXAPP_CMS_BASE="${arg_value}"
                 ;;
             -h|--help)  # Helpful hints
                 help
@@ -81,12 +71,11 @@ sudo su
 
 cd ~
 
-echo "EDXAPP_LMS_BASE: \"$EDXAPP_LMS_BASE\"" >> config.yml
-echo "EDXAPP_CMS_BASE: \"$EDXAPP_CMS_BASE\"" >> config.yml
-
 export OPENEDX_RELEASE=$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH
 
 wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/util/install/ansible-bootstrap.sh -O - | sudo -E bash
+
+wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/utils/install/config/config.yml
 
 wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/util/install/generate-passwords.sh -O - | bash
 
