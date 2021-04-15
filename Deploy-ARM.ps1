@@ -58,9 +58,6 @@ if($isLoggedIn){
         'adminUsername'=(&{If($adminUsername) {$adminUsername} Else {$parmeters.parameters.adminUsername.value}})
         'adminPublicKey'="$((&{If($adminPublicKey) {$adminPublicKey} Else {$parmeters.parameters.adminPublicKey.value}}))"
         
-        'cmsBaseURL'=(&{If($cmsBaseURL) {$cmsBaseURL} Else {$parmeters.parameters.cmsBaseURL.value}})
-        'lmsBaseURL'=(&{If($lmsBaseURL) {$lmsBaseURL} Else {$parmeters.parameters.lmsBaseURL.value}})
-        
         'installerGithubAccountName'=(&{If($installerGithubAccountName) {$installerGithubAccountName} Else {$parmeters.parameters.installerGithubAccountName.value}})
         'installerGithubProjectName'=(&{If($installerGithubProjectName) {$installerGithubProjectName} Else {$parmeters.parameters.installerGithubProjectName.value}})
         'installerGithubBranch'=(&{If($installerGithubBranch) {$installerGithubBranch} Else {$parmeters.parameters.name.value}})
