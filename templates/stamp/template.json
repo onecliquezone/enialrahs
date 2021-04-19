@@ -816,7 +816,7 @@
                         "value": []
                     },
                     "commandToExecute": {
-                        "value": "[concat('wget https://raw.githubusercontent.com/', parameters('installerGithubAccountName'), '/', parameters('installerGithubProjectName'), '/', parameters('installerGithubBranch'), '/utils/install/install-openedx.sh && sudo -H bash install-openedx.sh --edxconfiguration-public-github-accountname ', parameters('edxConfigurationGithubAccountName'), ' --edxconfiguration-public-github-projectname ', parameters('edxConfigurationGithubProjectName'), ' --edxconfiguration-public-github-projectbranch ', parameters('edxConfigurationGithubBranch'), '')]"
+                        "value": "[concat('wget https://raw.githubusercontent.com/', parameters('installerGithubAccountName'), '/', parameters('installerGithubProjectName'), '/', parameters('installerGithubBranch'), '/utils/install/install-openedx.sh && sudo -H bash install-openedx.sh --edxconfiguration-public-github-accountname ', parameters('edxConfigurationGithubAccountName'), ' --edxconfiguration-public-github-projectname ', parameters('edxConfigurationGithubProjectName'), ' --edxconfiguration-public-github-projectbranch ', parameters('edxConfigurationGithubBranch'), ' --installer-github-accountname ', parameters('installerGithubAccountName'), ' --installer-github-projectname ', parameters('installerGithubProjectName'), ' --installer-github-projectbranch ', parameters('installerGithubBranch'), '')]"
                     }
                 }
             },
