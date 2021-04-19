@@ -3,11 +3,17 @@
 EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME=""
 EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME=""
 EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH=""
+INSTALLER_GITHUB_ACCOUNTNAME=""
+INSTALLER_GITHUB_PROJECTNAME=""
+INSTALLER_GITHUB_PROJECTBRANCH=""
 
 help()
 {
     echo "This script sets up SSH, installs MDSD and runs the DB bootstrap"
     echo "Options:"
+    echo "        --installer-github-accountname Name of the account that owns the installer repository"
+    echo "        --installer-github-projectname Name of installer GitHub repository"
+    echo "        --installer-github-projectbranch Branch of installer GitHub repository"
     echo "        --edxconfiguration-public-github-accountname Name of the account that owns the edx configuration repository"
     echo "        --edxconfiguration-public-github-projectname Name of the edx configuration GitHub repository"
     echo "        --edxconfiguration-public-github-projectbranch Branch of edx configuration GitHub repository"
@@ -41,6 +47,15 @@ parse_args()
             --edxconfiguration-public-github-projectbranch)
                 EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH="${arg_value}"
                 ;;
+            --installer-github-accountname)
+                INSTALLER_GITHUB_ACCOUNTNAME="${arg_value}"
+                ;;
+            --installer-github-projectname)
+                INSTALLER_GITHUB_PROJECTNAME="${arg_value}"
+                ;;
+            --installer-github-projectbranch)
+                INSTALLER_GITHUB_PROJECTBRANCH="${arg_value}"
+                ;;
             -h|--help)  # Helpful hints
                 help
                 exit 2
@@ -73,9 +88,9 @@ cd ~
 
 export OPENEDX_RELEASE=$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH
 
-wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/util/install/ansible-bootstrap.sh -O - | sudo -E bash
+wget https://raw.githubusercontent.com/$INSTALLER_GITHUB_ACCOUNTNAME/$INSTALLER_GITHUB_PROJECTNAME/$INSTALLER_GITHUB_PROJECTBRANCH/utils/install/config/config.yml
 
-wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/utils/install/config/config.yml
+wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/util/install/ansible-bootstrap.sh -O - | sudo -E bash
 
 wget https://raw.githubusercontent.com/$EDX_CONFIGURATION_PUBLIC_GITHUB_ACCOUNTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTNAME/$EDX_CONFIGURATION_PUBLIC_GITHUB_PROJECTBRANCH/util/install/generate-passwords.sh -O - | bash
 
